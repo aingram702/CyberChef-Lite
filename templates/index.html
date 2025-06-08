@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<meta name="color-scheme" content="dark light">
+<head>
+  <title>CyberChef-Lite</title>
+  <style>
+    body { font-family: Arial; padding: 20px; }
+    textarea, input { width: 100%; }
+    .op-row { margin-bottom: 10px; }
+  </style>
+</head>
+<body>
+  <h2>CyberChef-Lite (Python + Flask)</h2>
+  <form method="POST">
+    <label>Input Text:</label><br>
+    <textarea name="input" rows="5">{{ input_text }}</textarea><br><br>
+
+    <h3>Operations Pipeline:</h3>
+    {% for i in range(5) %}
+      <div class="op-row">
+        <select name="step">
+          <option value="">-- Select Operation --</option>
+          {% for op in ['base64_encode', 'base64_decode', 'hex_encode', 'hex_decode', 'url_encode', 'url_decode', 'rot13', 'reverse', 'xor', 'replace', 'md5', 'sha1', 'sha256', 'sha512'] %}
+            <option value="{{ op }}">{{ op }}</option>
+          {% endfor %}
+        </select>
+        <input name="param" placeholder="optional param (e.g., key or old,new)">
+      </div>
+    {% endfor %}
+
+    <button type="submit">Run Pipeline</button>
+  </form>
+
+  <h3>Result:</h3>
+  <textarea rows="6" readonly>{{ result }}</textarea>
+  {% if error %}
+    <p style="color: red;"><strong>Error:</strong> {{ error }}</p>
+  {% endif %}
+</body>
+</html>
